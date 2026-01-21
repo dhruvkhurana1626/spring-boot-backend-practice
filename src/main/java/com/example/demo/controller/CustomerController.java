@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.request.CustomerRequest;
+import com.example.demo.dto.response.CustomerResponse;
 import com.example.demo.model.Customer;
 import com.example.demo.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +18,9 @@ public class CustomerController {
     CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity addCustomer(@RequestBody Customer customer){
-        Customer response = customerService.addCustomer(customer);
-        return new ResponseEntity(response, HttpStatus.OK);
+    public ResponseEntity addCustomer(@RequestBody CustomerRequest customerRequest){
+        CustomerResponse customerResponse = customerService.addCustomer(customerRequest);
+        return new ResponseEntity(customerResponse, HttpStatus.OK);
     }
 
     @GetMapping

@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
 public class Customer {
 
     @Id
@@ -25,7 +26,7 @@ public class Customer {
     @Column
     private int age;
 
-    @Column
+    @Column(unique = true,nullable = false)
     private String email;
 
     @Column
@@ -33,7 +34,7 @@ public class Customer {
     private Gender gender;
 
     @Column(length = 10)
-    private String mob;
+    private String phonenumber;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id")
