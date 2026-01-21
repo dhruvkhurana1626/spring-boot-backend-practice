@@ -12,12 +12,12 @@ import lombok.Setter;
 @Setter
 @Entity
 
-@Table(name = "Address Details")
+@Table(name = "address_details")
 public class Address {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int id;
+    private Integer id;
 
     @Column
     private String houseno;
@@ -30,9 +30,5 @@ public class Address {
 
     @Column
     private int pinCode;
-
-    @OneToOne
-    @JoinColumn(name="customer_id")
-    Customer customer;
 
 }

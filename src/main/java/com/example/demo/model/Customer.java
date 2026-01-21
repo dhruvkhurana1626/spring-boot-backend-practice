@@ -35,7 +35,8 @@ public class Customer {
     @Column(length = 10)
     private String mob;
 
-    @OneToOne(mappedBy = "customer")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="address_id")
     Address address;
 
     @CreationTimestamp

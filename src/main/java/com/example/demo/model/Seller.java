@@ -16,8 +16,9 @@ import java.util.List;
 @Entity
 public class Seller {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int id;
+    private Integer id;
 
     @Column
     private String name;
