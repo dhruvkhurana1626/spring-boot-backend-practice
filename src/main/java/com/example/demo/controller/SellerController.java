@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Seller;
+import com.example.demo.dto.request.SellerRequest;
+import com.example.demo.dto.response.SellerResponse;
 import com.example.demo.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,8 @@ public class SellerController {
     SellerService sellerService;
 
     @PostMapping
-    public ResponseEntity addSeller(@RequestBody Seller seller){
-        Seller response = sellerService.addSeller(seller);
+    public ResponseEntity addSeller(@RequestBody SellerRequest sellerRequest){
+        SellerResponse response = sellerService.addSeller(sellerRequest);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 }

@@ -14,6 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
+
 public class Seller {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,17 +2,14 @@ package com.example.demo.dto.response;
 
 import lombok.*;
 
-import java.util.Date;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
 
-public class CustomerResponse {
+public class ProductResponse {
     private String name;
-    private String email;
-    private String phonenumber;
-    private Date date;
+    private int price;
+    private SellerResponse sellerResponse;
 }

@@ -33,7 +33,7 @@ public class Customer {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
-    @Column(length = 10)
+    @Column(length = 10,nullable = false)
     private String phonenumber;
 
     @OneToOne(cascade = CascadeType.ALL)

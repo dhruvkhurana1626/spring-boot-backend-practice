@@ -23,6 +23,7 @@ public class CustomerTransformer {
         CustomerResponse customerResponse = CustomerResponse.builder()
                 .name(customer.getName())
                 .email(customer.getEmail())
+                .phonenumber(customer.getPhonenumber())
                 .date(customer.getDate())
                 .build();
 

@@ -2,10 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.enums.Type;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
 public class Product {
 
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,10 +25,13 @@ public class Product {
     @Column
     private int price;
 
+    @Column(length = 10,nullable = false,unique = true)
+    private String phonenumber;
+
     @Enumerated(value = EnumType.STRING)
     Type type;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="seller_id")
     Seller seller;
 
