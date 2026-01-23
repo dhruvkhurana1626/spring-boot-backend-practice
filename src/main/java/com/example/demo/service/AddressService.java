@@ -57,9 +57,6 @@ public class AddressService {
 
         customer.setAddress(null);
         customerRepository.save(customer);
-
-
-        addressRepository.delete(address);
     }
 
 }

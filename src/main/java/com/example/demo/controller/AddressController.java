@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.request.AddressRequest;
 import com.example.demo.dto.response.AddressResponse;
-import com.example.demo.exception.AddressNotFound;
 import com.example.demo.exception.CustomerNotFound;
-import com.example.demo.model.Address;
 import com.example.demo.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
