@@ -3,18 +3,18 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
+
 public class Review {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
 
@@ -22,8 +22,8 @@ public class Review {
     private String comment;
 
     @Column(nullable = false)
-    @Max(value=1)
-    @Min(value=5)
+    @Max(1)
+    @Min(5)
     private int rating;
 
     @ManyToOne

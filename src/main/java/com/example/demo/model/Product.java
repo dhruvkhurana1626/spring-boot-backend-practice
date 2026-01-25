@@ -15,9 +15,9 @@ import java.util.List;
 @Builder
 public class Product {
 
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private String id;
+    private Integer id;
 
     @Column
     private String name;

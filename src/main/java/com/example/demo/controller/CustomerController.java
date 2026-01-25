@@ -37,14 +37,20 @@ public class CustomerController {
 
     }
 
-    @GetMapping
-    public ResponseEntity getCustomersByGender(@RequestParam Gender gender){
+    @GetMapping("/gender")
+    public ResponseEntity getCustomersByGender(@RequestParam("gender") Gender gender){
         try{
             List<CustomerResponse> customerResponseList = customerService.getCustomersByGender(gender);
             return new ResponseEntity(customerResponseList,HttpStatus.OK);
         } catch (CustomerNotFound e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/by-age")
+    public ResponseEntity getCustomersByAge(@RequestParam("age") int age){
+        List<CustomerResponse> customerResponseList = customerService.getCustomersByAge(age);
+        return new ResponseEntity(customerResponseList,HttpStatus.OK);
     }
 
 }

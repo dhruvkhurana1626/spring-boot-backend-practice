@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.request.ReviewRequest;
+import com.example.demo.dto.response.ReviewResponse;
 import com.example.demo.exception.CustomerNotFound;
 import com.example.demo.model.Review;
 import com.example.demo.service.ReviewService;
@@ -24,6 +26,18 @@ public class ReviewController {
             return new ResponseEntity(response, HttpStatus.FOUND);
         } catch (CustomerNotFound e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity addReview(@RequestBody ReviewRequest reviewRequest,
+                                    @RequestParam ("cid") int custId,
+                                    @RequestParam ("pid") String prodId){
+        try {
+            ReviewResponse reviewResponse = reviewService.addReview(reviewRequest,custId,prodId);
+            return new ResponseEntity(reviewResponse,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 }

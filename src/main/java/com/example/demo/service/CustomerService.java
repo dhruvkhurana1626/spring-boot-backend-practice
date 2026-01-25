@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class CustomerService {
@@ -48,5 +49,13 @@ public class CustomerService {
 
         Customer customer = optionalCustomer.get();
         return customer;
+    }
+
+    public List<CustomerResponse> getCustomersByAge(int age) {
+        List<Customer> customerList = customerRepository.findByAge(age);
+        if(customerList.size()==0)return new ArrayList<>();
+        List<CustomerResponse> customerResponseList = new ArrayList<>();
+        for(Customer c : customerList) customerResponseList.add(CustomerTransformer.customerToCustomerResponse(c));
+        return customerResponseList;
     }
 }
