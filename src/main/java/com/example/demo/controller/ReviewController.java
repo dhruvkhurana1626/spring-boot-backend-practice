@@ -42,7 +42,7 @@ public class ReviewController {
     }
 
     @GetMapping("/review-by-word")
-    public ResponseEntity getReviewByWord(String word){
+    public ResponseEntity getReviewByWord(@RequestParam String word){
         List<ReviewResponse> reviewResponse = reviewService.getReviewByWord(word);
         return new ResponseEntity(reviewResponse,HttpStatus.OK);
     }

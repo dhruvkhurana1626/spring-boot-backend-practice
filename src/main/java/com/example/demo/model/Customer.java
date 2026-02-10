@@ -1,5 +1,6 @@
 package com.example.demo.model;
 import com.example.demo.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -44,6 +45,7 @@ public class Customer {
     Date date;
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     List<Review> reviewList = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer")
