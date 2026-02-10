@@ -4,6 +4,8 @@ import com.example.demo.dto.request.CustomerRequest;
 import com.example.demo.dto.response.CustomerResponse;
 import com.example.demo.enums.Gender;
 import com.example.demo.exception.CustomerNotFound;
+import com.example.demo.exception.EmailAlreadyUsed;
+import com.example.demo.exception.PhoneAlreadyUsed;
 import com.example.demo.model.Customer;
 import com.example.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,14 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity addCustomer(@RequestBody CustomerRequest customerRequest){
-        CustomerResponse customerResponse = customerService.addCustomer(customerRequest);
-        return new ResponseEntity(customerResponse, HttpStatus.OK);
+        try{
+            CustomerResponse customerResponse = customerService.addCustomer(customerRequest);
+            return new ResponseEntity(customerResponse, HttpStatus.OK);
+        } catch (EmailAlreadyUsed e) {
+            return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
+        } catch (PhoneAlreadyUsed e) {
+            return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
 
     @GetMapping

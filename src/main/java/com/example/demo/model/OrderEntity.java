@@ -3,7 +3,9 @@ package com.example.demo.model;
 import com.example.demo.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,17 +20,20 @@ public class OrderEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column
-    private int id;
+    private Integer id;
 
     @Column
-    private int value;
+    private int totalCost;
+
+    @Column
+    @CreationTimestamp
+    private Date createdAt;
 
     @Column
     @Enumerated(value = EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @OneToMany(mappedBy = "orderEntity")
+    @OneToMany(mappedBy = "orderEntity",cascade = CascadeType.ALL)
     List<OrderItems> orderItems = new ArrayList<>();
 
     @ManyToOne

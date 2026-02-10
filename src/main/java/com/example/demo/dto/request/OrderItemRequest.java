@@ -12,5 +12,5 @@ import lombok.Setter;
 
 public class OrderItemRequest {
     private int productId;
-    private int Quantity;
+    private int quantity;
 }

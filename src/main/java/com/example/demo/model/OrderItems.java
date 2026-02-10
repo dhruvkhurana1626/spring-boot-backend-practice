@@ -26,6 +26,6 @@ public class OrderItems {
     private Product product;
 
     private int Quantity;
-    private int priceAtOrder;
+    private int price;
 
 }
