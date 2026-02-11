@@ -29,6 +29,9 @@ public class OrderController  {
         catch (CustomerNotFound e){
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
+        catch (IllegalArgumentException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
 }

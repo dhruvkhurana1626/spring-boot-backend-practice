@@ -1,83 +1,86 @@
 package com.example.demo.service;
 
+import com.example.demo.Utility.Validation;
 import com.example.demo.dto.request.AddressRequest;
 import com.example.demo.dto.response.AddressResponse;
 import com.example.demo.exception.AddressNotFound;
-import com.example.demo.exception.CustomerNotFound;
 import com.example.demo.model.Address;
 import com.example.demo.model.Customer;
 import com.example.demo.repository.AddressRepository;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.transformers.AddressTransformer;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-
+@RequiredArgsConstructor
 public class AddressService {
 
-    @Autowired
-    CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+    private final AddressRepository addressRepository;
+    private final Validation validation;
 
-    @Autowired
-    AddressRepository addressRepository;
+    public AddressResponse addAddress(AddressRequest addressRequest, int customerId) {
 
-    @Transactional
-    public AddressResponse addAddress(AddressRequest addressRequest, int id) {
-        Optional<Customer> optionalCustomer = customerRepository.findById(id);
-        if(optionalCustomer.isEmpty()){
-            throw new CustomerNotFound("Invalid Id");
-        }
+        // Validate if customer exists
+        Customer customer = validation.checkIfCustomerExist(customerId);
 
+        // Convert request DTO to Address entity
         Address address = AddressTransformer.addressRequestToAddress(addressRequest);
 
-        Customer customer = optionalCustomer.get();
+        // Map address to customer (one-to-one relationship)
         customer.setAddress(address);
+
+        // Persist customer along with address
         customerRepository.save(customer);
 
+        // Return response DTO
         return AddressTransformer.addressToAddressResponse(address);
     }
 
     @Transactional
-    public void deleteAddress(int id) {
-        Optional<Customer> optionalCustomer = customerRepository.findById(id);
-        if(optionalCustomer.isEmpty()){
-            throw new CustomerNotFound("Customer With ID -" + id + "doesnt exist");
-        }
+    public void deleteAddress(int customerId) {
 
-        Customer customer = optionalCustomer.get();
+        // Validate customer existence
+        Customer customer = validation.checkIfCustomerExist(customerId);
 
+        // Fetch existing address
         Address address = customer.getAddress();
-        if(address==null){
-            throw new AddressNotFound("Pls save at least one address before trying to delete.");
+
+        // If no address exists, deletion is not possible
+        if (address == null) {
+            throw new AddressNotFound("Please add an address before attempting to delete.");
         }
 
+        // Remove address mapping
         customer.setAddress(null);
+
+        // Persist the change
         customerRepository.save(customer);
     }
 
-    public AddressResponse updateAddress(AddressRequest addressRequest, int id) {
+    @Transactional
+    public AddressResponse updateAddress(AddressRequest addressRequest, int customerId) {
 
-        //validating customer id
-        Customer customer = customerRepository.findById(id).orElseThrow(()->new CustomerNotFound("Customer ID is Invalid"));
+        // Validate customer existence
+        Customer customer = validation.checkIfCustomerExist(customerId);
 
+        // Fetch existing address
         Address address = customer.getAddress();
 
-        //validation address
+        // If address does not exist, update is not allowed
         if (address == null) {
-            throw new AddressNotFound("No address found to update");
+            throw new AddressNotFound("No address found to update.");
         }
 
-        //update
+        // Update address fields
         address.setHouseno(addressRequest.getHouseno());
         address.setPinCode(addressRequest.getPinCode());
         address.setState(addressRequest.getState());
         address.setCity(addressRequest.getCity());
 
-        //return the response
+        // Address is automatically updated due to transactional context
         return AddressTransformer.addressToAddressResponse(address);
     }
 }

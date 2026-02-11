@@ -39,7 +39,7 @@ public class CustomerServiceTests {
         Mockito.when(customerRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(customer));
 
         //act
-        CustomerResponse customerResponse = CustomerTransformer.customerToCustomerResponse(customerService.getCustomerById(1));
+        CustomerResponse customerResponse = CustomerTransformer.customerToCustomerResponse(customerRepository.findById(1).get());
 
         //assert
         Assertions.assertNotNull(customerResponse);

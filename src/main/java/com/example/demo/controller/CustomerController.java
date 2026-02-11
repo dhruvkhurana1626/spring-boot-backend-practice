@@ -37,8 +37,8 @@ public class CustomerController {
     @GetMapping
     public ResponseEntity getCustomerById(@RequestParam("id") int id){
         try {
-            Customer customer = customerService.getCustomerById(id);
-            return new ResponseEntity (customer,HttpStatus.FOUND);
+            CustomerResponse customerResponse = customerService.getCustomerById(id);
+            return new ResponseEntity (customerResponse,HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
